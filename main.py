@@ -46,3 +46,12 @@ def home(request: Request):
                 "Access-Control-Max-Age": "3600",
             },
         )
+    elif request.method == "OPTIONS":
+        return Response(
+            headers={
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+                "Access-Control-Allow-Headers": "Content-Type",
+                "Access-Control-Max-Age": "3600",
+            },
+        )
