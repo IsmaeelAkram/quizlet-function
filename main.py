@@ -1,6 +1,6 @@
 import json
 import functions_framework
-from flask import Request, Response, jsonify
+from flask import Request, Response
 
 cards = [
     {
