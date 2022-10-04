@@ -1,2 +1,5 @@
-functions-framework==3.*
+# functions-framework==3.*
 requests
+selenium
+gunicorn
+flask
