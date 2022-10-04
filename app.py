@@ -4,10 +4,11 @@ from flask import Flask, request, Response
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import uuid
+import time
 
 app = Flask(__name__)
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument("--headless")
+# chrome_options.add_argument("--headless")
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("window-size=1024,768")
 chrome_options.add_argument("--no-sandbox")
@@ -22,10 +23,15 @@ def home():
         newCards = []
     
         browser.get(url=body.get("url"))
+        browser.execute_script(("window.scrollTo(0, document.body.scrollHeight);"))
+        time.sleep(1)
         terms = browser.find_elements_by_class_name("SetPageTerm-content")
+        terms = browser.find_elements(By.CLASS_NAME, "SetPageTerm-content")
         for term in terms:
-            definition = term.find_element_by_class_name("SetPageTerm-definitionText").text
-            term = term.find_element_by_class_name("SetPageTerm-wordText").text
+            definition = term.find_element(By.CLASS_NAME, "SetPageTerm-definitionText").text
+            term = term.find_element(By.CLASS_NAME, "SetPageTerm-wordText").text
+            if definition == "" or term == "":
+                continue
             newCards.append({
                 "id": str(uuid.uuid4()),
                 "name": term,
